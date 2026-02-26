@@ -27,5 +27,27 @@ public class UsuarioRepository {
         }
     }
 
+    public void lerTodosUsuarios(Connection connection) {
+        String sql = """
+                SELECT id, nome, email
+                FROM usuarios
+                """;
+
+        try(PreparedStatement stat = connection.prepareStatement(sql)) {
+
+            ResultSet rs = stat.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                System.out.printf("ID: %d - Nome: %s - Email: %s",id,nome,email);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Não foi possível listar os Usuários salvos.");
+        }
+    }
     
 }
