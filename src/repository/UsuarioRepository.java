@@ -49,5 +49,29 @@ public class UsuarioRepository {
             System.out.println("Não foi possível listar os Usuários salvos.");
         }
     }
-    
+
+    public void atualizarEmailUsuario(Connection connection,  String email, String nome) {
+        String sql = """
+                UPDATE usuarios
+                SET email = ?
+                WHERE nome = ?
+                """;
+        try(PreparedStatement stat = connection.prepareStatement(sql)) {
+            stat.setString(1,email);
+            stat.setString(2,nome);
+
+            int linhasAlteradas = stat.executeUpdate();
+
+            if(linhasAlteradas > 0) {
+                System.out.println("Email atualizado para esse Usuário!");
+            } else {
+                System.out.println("Não foi possível modificar o email desse Usuário.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Falha na atualização do Usuário.");
+        }
+    }
+
 }
