@@ -73,5 +73,27 @@ public class UsuarioRepository {
             System.out.println("Falha na atualização do Usuário.");
         }
     }
+    
+    public void excluirUsuarioPeloNome(Connection connection, String nome) {
+        String sql = """
+                DELETE 
+                FROM usuarios 
+                WHERE nome = ?
+                """;
 
+        try(PreparedStatement stat = connection.prepareStatement(sql)) {
+            stat.setString(1,nome);
+
+            int linhasAlteradas = stat.executeUpdate();
+
+            if(linhasAlteradas > 0) {
+                System.out.println("Usuário excluído do Banco de Dados!");
+            } else {
+                System.out.println("Não foi possível excluir esse Usuário.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Não foi possível excluir um Usuário com esse nome.");
+        }
+    }
 }
