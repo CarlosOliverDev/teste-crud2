@@ -69,7 +69,7 @@ public class Main {
             System.out.println("Consulta feita com sucesso.");
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
-            System.out.println("Não foi possível conectar com o Banco de Dados.");
+            System.out.println("Erro: " + e.getMessage());
         }
     }
 }
